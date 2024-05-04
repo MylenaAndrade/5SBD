@@ -1,9 +1,9 @@
 pedido_id;item_pedido_id;dt_compra;dt_pagamento;email_comprador;nome_comprador;cpf_comprador;tel_comprador;sku;upc;nome_produto;quant;moeda;preco_item;servico_envio;endereco_entrega1;endereco_entrega2;endereco_entrega;cidade_entrega;estado_entrega;cep;pais_entrega
-12345;1;2024-04-25;2024-04-26;exemplo@email.com;João da Silva;12345678901;1234-5678;SKU123;012345678901;Camiseta Azul;2;BRL;25.00;Padrão;Rua Exemplo;;São Paulo;SP;01234-567;Brasil
-54321;2;2024-04-26;2024-04-27;customer@example.com;Maria Oliveira;98765432109;9876-5432;SKU456;123456789012;Calça Jeans;1;BRL;50.00;Padrão;Av. Teste;;Rio de Janeiro;RJ;89012-345;Brasil
-98765;3;2024-04-27;2024-04-28;test@example.com;Carlos Souza;45678901234;3456-7890;SKU789;234567890123;Tênis Esportivo;3;BRL;80.00;Padrão;Rua Principal;;Belo Horizonte;MG;67890-123;Brasil
-24680;4;2024-04-28;2024-04-29;sales@example.com;Ana Santos;78901234567;2345-6789;SKU321;345678901234;Boné Preto;4;BRL;15.00;Padrão;Av. Principal;;Porto Alegre;RS;45678-901;Brasil
-13579;5;2024-04-29;2024-04-30;contact@example.com;Pedro Oliveira;01234567890;4567-8901;SKU654;456789012345;Jaqueta de Couro;1;BRL;120.00;Padrão;Rua Secundária;;Salvador;BA;23456-789;Brasil
-11223;6;2024-04-30;2024-05-01;info@example.com;Fernanda Lima;23456789012;5678-9012;SKU987;567890123456;Sapato Social;2;BRL;90.00;Padrão;Av. Exemplo;;Curitiba;PR;34567-890;Brasil
-99887;7;2024-05-01;2024-05-02;support@example.com;Luiza Ferreira;34567890123;6789-0123;SKU101;678901234567;Saia Floral;3;BRL;35.00;Padrão;Rua Teste;;Florianópolis;SC;12345-678;Brasil
-55777;8;2024-05-02;2024-05-03;info@example.com;Gustavo Almeida;45678901234;7890-1234;SKU202;789012345678;Blusa Listrada;1;BRL;40.00;Padrão;Av. Principal;;Recife;PE;98765-432;Brasil
+12345;1;2024-04-25;2024-04-26;exemplo@email.com;João da Silva;12345678901;1234-5678;SKU123;012345678901;Camiseta Azul;2;BRL;25.00;Padrão;Rua Exemplo;;;São Paulo;SP;01234-567;Brasil
+54321;2;2024-04-26;2024-04-27;customer@example.com;Maria Oliveira;98765432109;9876-5432;SKU456;123456789012;Calça Jeans;1;BRL;50.00;Padrão;Av. Teste;;;Rio de Janeiro;RJ;89012-345;Brasil
+98765;3;2024-04-27;2024-04-28;test@example.com;Carlos Souza;45678901234;3456-7890;SKU789;234567890123;Tênis Esportivo;3;BRL;80.00;Padrão;Rua Principal;;;Belo Horizonte;MG;67890-123;Brasil
+24680;4;2024-04-28;2024-04-29;sales@example.com;Ana Santos;78901234567;2345-6789;SKU321;345678901234;Boné Preto;4;BRL;15.00;Padrão;Av. Principal;;;Porto Alegre;RS;45678-901;Brasil
+13579;5;2024-04-29;2024-04-30;contact@example.com;Pedro Oliveira;01234567890;4567-8901;SKU654;456789012345;Jaqueta de Couro;1;BRL;120.00;Padrão;Rua Secundária;;;Salvador;BA;23456-789;Brasil
+11223;6;2024-04-30;2024-05-01;info@example.com;Fernanda Lima;23456789012;5678-9012;SKU987;567890123456;Sapato Social;2;BRL;90.00;Padrão;Av. Exemplo;;;Curitiba;PR;34567-890;Brasil
+99887;7;2024-05-01;2024-05-02;support@example.com;Luiza Ferreira;34567890123;6789-0123;SKU101;678901234567;Saia Floral;3;BRL;35.00;Padrão;Rua Teste;;;Florianópolis;SC;12345-678;Brasil
+55777;8;2024-05-02;2024-05-03;info@example.com;Gustavo Almeida;45678901234;7890-1234;SKU202;789012345678;Blusa Listrada;1;BRL;40.00;Padrão;Av. Principal;;;Recife;PE;98765-432;Brasil
