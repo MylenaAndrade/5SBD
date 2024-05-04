@@ -41,3 +41,19 @@ IGNORE 1 ROWS;
 
 -- Verificando se o arquivo csv foi incluido corretamente
 select * from carga;
+
+-- Criando a tabela clientes
+create table cliente(
+	cpf varchar(11) not null primary key,
+    email_cliente varchar(20) not null,
+    nome_cliente varchar(20) not null,
+    tel_cliente varchar(11) not null
+)default charset = utf8;
+
+-- Retorna todos os cps da tabela e só insere se não tiver o cpf igual 
+insert into cliente
+select  c.cpf_cliente, c.email_cliente, c.nome_cliente, c.tel_cliente
+from carga c
+WHERE c.cpf_cliente NOT IN (SELECT cpf FROM cliente);
+
+
