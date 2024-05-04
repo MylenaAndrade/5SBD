@@ -15,7 +15,7 @@ create temporary table carga(
     email_cliente varchar(20) not null,
     nome_cliente varchar(20) not null,
     cpf_cliente varchar(11) not null,
-    tel_cliente varchar(13) not null,
+    tel_cliente varchar(11) not null,
     sku varchar(14) not null,
     upc int not null,
     nome_produto varchar(18) not null,
@@ -25,9 +25,19 @@ create temporary table carga(
     servico_envio varchar(10) not null,
     endereco_entrega1 varchar(40) not null,
     endereco_entrega2 varchar(40) default null,
-    endereco_entrega2 varchar(40) default null,
+    endereco_entrega3 varchar(40) default null,
     cidade_entrega varchar(20) not null,
     estado_entrega varchar(20) not null,
     cep varchar(9) not null,
     pais_entrega varchar(10) not null
 )default charset = utf8;
+
+-- Carregando o arquivo csv para a tabela
+LOAD DATA INFILE 'C:/Users/mylen/OneDrive/Documentos/5SBD/AV1-Bazar Tem Tudo/carga.csv'
+INTO TABLE carga
+FIELDS TERMINATED BY ';'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+-- Verificando se o arquivo csv foi incluido corretamente
+select * from carga;
