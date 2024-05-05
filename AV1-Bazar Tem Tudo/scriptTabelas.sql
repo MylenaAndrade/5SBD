@@ -56,4 +56,17 @@ select  c.cpf_cliente, c.email_cliente, c.nome_cliente, c.tel_cliente
 from carga c
 WHERE c.cpf_cliente NOT IN (SELECT cpf FROM cliente);
 
+-- Criando a tabela produtos
+ create table produtos (
+    sku varchar(14) primary key,
+    upc int not null,
+    nome_produto varchar(20) not null
+);
 
+-- Retorna todos os produtos da tabela e só insere se não tiver o sku igual 
+insert into produtos
+select  c.sku, c.upc, c.nome_produto
+from carga c
+WHERE c.sku NOT IN (SELECT sku FROM produtos);
+
+select * from produtos;
