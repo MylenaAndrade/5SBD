@@ -97,14 +97,34 @@ create table pedidos(
     pais_entrega varchar(10) not null
 )default charset = utf8;
 
--- Retorna todos os produtos da tabela e só insere se não tiver o sku igual 
+-- Retorna todos os pedidos da tabela e só insere se não tiver o pedidos_id igual 
 insert into pedidos
 select  c.pedido_id, c.dt_compra, c.dt_pagamento, c.email_cliente, c.nome_cliente, c.cpf_cliente, c.tel_cliente, 
 c.sku, c.upc, c.nome_produto, c.quant, c.moeda, c.preco_item, c.servico_envio, c.endereco_entrega1, c.endereco_entrega2,
 c.endereco_entrega3, c.cidade_entrega, c.estado_entrega, c.cep, c.pais_entrega
 from carga c
-WHERE c.sku NOT IN (SELECT pedido_id FROM pedidos);
+WHERE c.pedido_id NOT IN (SELECT pedido_id FROM pedidos);
 
 -- Verificando se a tabela foi preenchida corretamente
 select * from pedidos;
 
+-- Criando a tabela itens pedido
+create table itensPedido (
+    item_pedido_id int,
+    pedido_id int,
+    sku varchar(14) not null,
+    nome_produto varchar(20) not null,
+    quant int not null,
+    moeda varchar(10) not null,
+    preco_item decimal(6,2) not null,
+    foreign key (pedido_id) references pedidos(pedido_id)
+)default charset = utf8;
+
+-- Insere na tabela os dados da tabela carga e adiciona foreign key
+insert into itensPedido
+select c.item_pedido_id, p.pedido_id, c.sku, c.nome_produto, c.quant, c.moeda, c.preco_item
+from carga c
+INNER JOIN pedidos p ON p.pedido_id = c.pedido_id;
+
+-- Verificando se a tabela foi preenchida corretamente
+select * from itensPedido;
