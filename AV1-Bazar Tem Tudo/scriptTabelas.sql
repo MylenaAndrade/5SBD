@@ -161,3 +161,7 @@ set preco_total = quant * preco_item;
 
 -- Ordenando decrescentemente
 select * from movimentacao_estoque order by preco_total desc;
+
+-- Adicionando na tabela a quantidade de produto em estoque
+alter table movimentacao_estoque
+add quant_estoque int default null;
