@@ -54,7 +54,7 @@ create table clientes(
 insert into clientes
 select  c.cpf_cliente, c.email_cliente, c.nome_cliente, c.tel_cliente
 from carga c
-WHERE c.cpf_cliente NOT IN (SELECT cpf FROM clientes);
+where c.cpf_cliente not in (select cpf from clientes);
 
 -- Criando a tabela produtos
  create table produtos (
@@ -103,7 +103,7 @@ select  c.pedido_id, c.dt_compra, c.dt_pagamento, c.email_cliente, c.nome_client
 c.sku, c.upc, c.nome_produto, c.quant, c.moeda, c.preco_item, c.servico_envio, c.endereco_entrega1, c.endereco_entrega2,
 c.endereco_entrega3, c.cidade_entrega, c.estado_entrega, c.cep, c.pais_entrega
 from carga c
-WHERE c.pedido_id NOT IN (SELECT pedido_id FROM pedidos);
+where c.pedido_id not in (select pedido_id from pedidos);
 
 -- Verificando se a tabela foi preenchida corretamente
 select * from pedidos;
@@ -128,3 +128,33 @@ INNER JOIN pedidos p ON p.pedido_id = c.pedido_id;
 
 -- Verificando se a tabela foi preenchida corretamente
 select * from itensPedido;
+
+create table estoque (
+    id int auto_increment primary key,
+    nome_produto varchar(20) not null,
+    quant int not null,
+    preco_item decimal(6,2) not null,
+    foreign key (pedido_id) references pedidos(pedido_id)
+)default charset = utf8;
+
+create table movimentacao_estoque (
+    id int auto_increment primary key,
+    pedido_id int,
+    nome_produto varchar(20) not null,
+    quant int not null,
+    preco_item decimal(6,2) not null,
+    preco_total decimal(6,2) default null,
+    foreign key (pedido_id) references pedidos(pedido_id)
+)default charset = utf8;
+
+-- Insere na tabela os dados da tabela pedido
+insert into movimentacao_estoque (pedido_id,nome_produto, quant, preco_item) 
+select p.pedido_id, p.nome_produto, p.quant, p.preco_item
+from pedidos p;
+
+-- Verificando se a tabela foi preenchida corretamente
+select * from movimentacao_estoque;
+
+-- Obtendo o preço total do pedido
+update movimentacao_estoque
+set preco_total = quant * preco_item;
