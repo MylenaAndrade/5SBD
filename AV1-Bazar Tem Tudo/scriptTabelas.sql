@@ -158,3 +158,6 @@ select * from movimentacao_estoque;
 -- Obtendo o preço total do pedido
 update movimentacao_estoque
 set preco_total = quant * preco_item;
+
+-- Ordenando decrescentemente
+select * from movimentacao_estoque order by preco_total desc;
