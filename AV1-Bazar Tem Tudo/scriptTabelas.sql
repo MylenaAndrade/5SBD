@@ -1,167 +1,102 @@
 -- Criando o Banco de Dados
-create database marketplace
-default character set utf8mb4
-default collate utf8mb4_general_ci;
+CREATE DATABASE marketplace
+COLLATE Latin1_General_CI_AI;
 
 -- Acessando o BD criado
-use marketplace;
+USE marketplace;
 
 -- Criando a tabela Carga
-create temporary table carga(
-	pedido_id int not null,
-	item_pedido_id int not null,
-    dt_compra date not null,
-    dt_pagamento date not null,
-    email_cliente varchar(20) not null,
-    nome_cliente varchar(20) not null,
-    cpf_cliente varchar(11) not null,
-    tel_cliente varchar(11) not null,
-    sku varchar(14) not null,
-    upc int not null,
-    nome_produto varchar(18) not null,
-    quant int not null,
-    moeda varchar(10) not null,
-    preco_item decimal(6,2) not null,
-    servico_envio varchar(10) not null,
-    endereco_entrega1 varchar(40) not null,
-    endereco_entrega2 varchar(40) default null,
-    endereco_entrega3 varchar(40) default null,
-    cidade_entrega varchar(20) not null,
-    estado_entrega varchar(20) not null,
-    cep varchar(9) not null,
-    pais_entrega varchar(10) not null
-)default charset = utf8;
-
--- Carregando o arquivo csv para a tabela
-LOAD DATA INFILE 'C:/Users/mylen/OneDrive/Documentos/5SBD/AV1-Bazar Tem Tudo/carga.csv'
-INTO TABLE carga
-FIELDS TERMINATED BY ';'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
--- Verificando se o arquivo csv foi incluido corretamente
-select * from carga;
-
--- Criando a tabela clientes
-create table clientes(
-	cpf varchar(11) not null primary key,
-    email_cliente varchar(20) not null,
-    nome_cliente varchar(20) not null,
-    tel_cliente varchar(11) not null
-)default charset = utf8;
-
--- Retorna todos os cps da tabela e só insere se não tiver o cpf igual 
-insert into clientes
-select  c.cpf_cliente, c.email_cliente, c.nome_cliente, c.tel_cliente
-from carga c
-where c.cpf_cliente not in (select cpf from clientes);
-
--- Criando a tabela produtos
- create table produtos (
-    sku varchar(14) primary key,
-    upc int not null,
-    nome_produto varchar(20) not null
+CREATE TABLE tempCarga(
+    pedido_id INT NOT NULL,
+    item_pedido_id INT NOT NULL,
+    dt_compra DATE NOT NULL,
+    dt_pagamento DATE NOT NULL,
+    email_cliente VARCHAR(20) NOT NULL,
+    nome_cliente VARCHAR(20) NOT NULL,
+    cpf_cliente VARCHAR(11) NOT NULL,
+    tel_cliente VARCHAR(11) NOT NULL,
+    sku VARCHAR(14) NOT NULL,
+    upc VARCHAR(14) NOT NULL,
+    nome_produto VARCHAR(30) NOT NULL,
+    quant INT NOT NULL,
+    moeda VARCHAR(10) NOT NULL,
+    preco_item DECIMAL(6,2) NOT NULL,
+    servico_envio VARCHAR(10) NOT NULL,
+    endereco_entrega1 VARCHAR(40) NOT NULL,
+    endereco_entrega2 VARCHAR(40) NULL,
+    endereco_entrega3 VARCHAR(40) NULL,
+    cidade_entrega VARCHAR(20) NOT NULL,
+    estado_entrega VARCHAR(20) NOT NULL,
+    cep VARCHAR(9) NOT NULL,
+    pais_entrega VARCHAR(10) NOT NULL
 );
 
--- Retorna todos os produtos da tabela e só insere se não tiver o sku igual 
-insert into produtos
-select  c.sku, c.upc, c.nome_produto
-from carga c
-WHERE c.sku NOT IN (SELECT sku FROM produtos);
 
--- Verificando se a tabela foi preenchida corretamente
-select * from produtos;
+-- Criando a tabela clientes
+CREATE TABLE clientes(
+    cpf VARCHAR(11) PRIMARY KEY,
+    email_cliente VARCHAR(20) NOT NULL,
+    nome_cliente VARCHAR(20) NOT NULL,
+    tel_cliente VARCHAR(11) NOT NULL
+);
 
--- Criando a tabela pedido
-create table pedidos(
-	pedido_id int not null primary key,
-    dt_compra date not null,
-    dt_pagamento date not null,
-    email_cliente varchar(20) not null,
-    nome_cliente varchar(20) not null,
-    cpf_cliente varchar(11) not null,
-    tel_cliente varchar(13) not null,
-    sku varchar(14) not null,
-    upc int not null,
-    nome_produto varchar(18) not null,
-    quant int not null,
-    moeda varchar(10) not null,
-    preco_item decimal(6,2) not null,
-    servico_envio varchar(10) not null,
-    endereco_entrega1 varchar(40) not null,
-    endereco_entrega2 varchar(40) default null,
-    endereco_entrega3 varchar(40) default null,
-    cidade_entrega varchar(20) not null,
-    estado_entrega varchar(20) not null,
-    cep varchar(9) not null,
-    pais_entrega varchar(10) not null
-)default charset = utf8;
+-- Criando a tabela produtos
+CREATE TABLE produtos (
+    sku VARCHAR(14) PRIMARY KEY,
+    upc VARCHAR(14) NOT NULL,
+    nome_produto VARCHAR(30) NOT NULL,
+	estoque INT
+);
 
--- Retorna todos os pedidos da tabela e só insere se não tiver o pedidos_id igual 
-insert into pedidos
-select  c.pedido_id, c.dt_compra, c.dt_pagamento, c.email_cliente, c.nome_cliente, c.cpf_cliente, c.tel_cliente, 
-c.sku, c.upc, c.nome_produto, c.quant, c.moeda, c.preco_item, c.servico_envio, c.endereco_entrega1, c.endereco_entrega2,
-c.endereco_entrega3, c.cidade_entrega, c.estado_entrega, c.cep, c.pais_entrega
-from carga c
-where c.pedido_id not in (select pedido_id from pedidos);
-
--- Verificando se a tabela foi preenchida corretamente
-select * from pedidos;
+-- Criando a tabela pedidos
+CREATE TABLE pedidos (
+    pedido_id INT NOT NULL PRIMARY KEY,
+    dt_compra DATE NOT NULL,
+    dt_pagamento DATE NOT NULL,
+	status_pedido VARCHAR(14) DEFAULT 'Processando',
+	preco_total decimal(6,2) default null,
+    cliente_id VARCHAR(11),
+    quant_total INT,
+    moeda VARCHAR(10) NOT NULL,
+    servico_envio VARCHAR(10) NOT NULL,
+    endereco_entrega1 VARCHAR(40) NOT NULL,
+    endereco_entrega2 VARCHAR(40) NULL,
+    endereco_entrega3 VARCHAR(40) NULL,
+    cidade_entrega VARCHAR(20) NOT NULL,
+    estado_entrega VARCHAR(20) NOT NULL,
+    cep VARCHAR(9) NOT NULL,
+    pais_entrega VARCHAR(10) NOT NULL,
+	FOREIGN KEY (cliente_id) REFERENCES clientes(cpf),
+);
 
 -- Criando a tabela itens pedido
-create table itensPedido (
-    item_pedido_id int,
-    pedido_id int,
-    sku varchar(14) not null,
-    nome_produto varchar(20) not null,
-    quant int not null,
-    moeda varchar(10) not null,
-    preco_item decimal(6,2) not null,
-    foreign key (pedido_id) references pedidos(pedido_id)
-)default charset = utf8;
+CREATE TABLE itensPedido (
+    item_pedido_id INT PRIMARY KEY,
+    pedido_id INT,
+    produto_id VARCHAR(14) NOT NULL,
+	nome_produto VARCHAR(30) NOT NULL,
+    quant INT NOT NULL,
+    preco_item DECIMAL(6,2) NOT NULL,
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(pedido_id),
+	FOREIGN KEY (produto_id) REFERENCES produtos(sku)
+);
 
--- Insere na tabela os dados da tabela carga e adiciona foreign key
-insert into itensPedido
-select c.item_pedido_id, p.pedido_id, c.sku, c.nome_produto, c.quant, c.moeda, c.preco_item
-from carga c
-INNER JOIN pedidos p ON p.pedido_id = c.pedido_id;
+-- Criando a tabela de movimenta��o de estoque
+CREATE TABLE movimentacao_estoque (
+    id INT PRIMARY KEY IDENTITY,
+	pedido_id INT,
+	quant_pedido INT,
+	quant_estoque INT,
+	dt_movimentacao DATETIME,
+	preco_total INT,
+	FOREIGN KEY (pedido_id) REFERENCES pedidos(pedido_id)
+);
 
--- Verificando se a tabela foi preenchida corretamente
-select * from itensPedido;
+-- Criando a tabela compras
+CREATE TABLE compras (
+    id INT PRIMARY KEY IDENTITY,
+	dt_compra DATETIME,
+	sku VARCHAR(14), 
+	quant_necessaria INT,
+);
 
-create table estoque (
-    id int auto_increment primary key,
-    nome_produto varchar(20) not null,
-    quant int not null,
-    preco_item decimal(6,2) not null,
-    foreign key (pedido_id) references pedidos(pedido_id)
-)default charset = utf8;
-
-create table movimentacao_estoque (
-    id int auto_increment primary key,
-    pedido_id int,
-    nome_produto varchar(20) not null,
-    quant int not null,
-    preco_item decimal(6,2) not null,
-    preco_total decimal(6,2) default null,
-    foreign key (pedido_id) references pedidos(pedido_id)
-)default charset = utf8;
-
--- Insere na tabela os dados da tabela pedido
-insert into movimentacao_estoque (pedido_id,nome_produto, quant, preco_item) 
-select p.pedido_id, p.nome_produto, p.quant, p.preco_item
-from pedidos p;
-
--- Verificando se a tabela foi preenchida corretamente
-select * from movimentacao_estoque;
-
--- Obtendo o preço total do pedido
-update movimentacao_estoque
-set preco_total = quant * preco_item;
-
--- Ordenando decrescentemente
-select * from movimentacao_estoque order by preco_total desc;
-
--- Adicionando na tabela a quantidade de produto em estoque
-alter table movimentacao_estoque
-add quant_estoque int default null;
