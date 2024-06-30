@@ -1,0 +1,6 @@
+@BazarTemTudo_HostAddress = http://localhost:5034
+
+GET {{BazarTemTudo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
